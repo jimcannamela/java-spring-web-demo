@@ -1,6 +1,7 @@
 package com.galvanize.springwebdemo;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -44,10 +45,25 @@ public class EmployeeController {
 		}
 		return searchResults;
 	}
+//  3 different ways to change the status to "CREATED" and return the request body
+
+//	@PostMapping("/add")
+//	@ResponseStatus(HttpStatus.CREATED)
+//	public void addEmployee(@RequestBody Employee newEmployee) {
+//		employees.add(newEmployee);
+//	}
+
+//	@PostMapping("/add")
+//	public ResponseEntity<Employee> addEmployee(@RequestBody Employee newEmployee) {
+//		employees.add(newEmployee);
+//		return new ResponseEntity<Employee>(newEmployee, HttpStatus.CREATED);  <-- response entity is instatiated
+//	}
 
 	@PostMapping("/add")
 	@ResponseStatus(HttpStatus.CREATED)
-	public void addEmployee(@RequestBody Employee newEmployee) {
+	public ResponseEntity<Employee> addEmployee(@RequestBody Employee newEmployee) {
 		employees.add(newEmployee);
+		return ResponseEntity.status(HttpStatus.CREATED).body(newEmployee);
 	}
+
 }
